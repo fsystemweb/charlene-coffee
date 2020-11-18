@@ -1,0 +1,16 @@
+[
+  {
+    "name": "orange juice",
+    "size": null,
+    "price": 3.95,
+    "type": "juice",
+    "currency": "CHF"
+  },
+  {
+    "name": "bacon roll",
+    "size": null,
+    "price": 4.50,
+    "type": "snack",
+    "currency": "CHF"
+  }
+]

@@ -6,14 +6,14 @@ import com.cognizant.charlenecoffee.enums.ProductType;
 public class Product {
     private String name;
     private CoffeeSize size;
-    private Float price;
+    private Double price;
     private ProductType type;
     private String currency;
 
     public Product() {
     }
 
-    public Product(String name, CoffeeSize size, Float price, ProductType type, String currency) {
+    public Product(String name, CoffeeSize size, Double price, ProductType type, String currency) {
         this.name = name;
         this.size = size;
         this.price = price;
@@ -37,11 +37,11 @@ public class Product {
         this.size = size;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
