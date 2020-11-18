@@ -3,8 +3,8 @@ package com.cognizant.charlenecoffee.services;
 import com.cognizant.charlenecoffee.enums.CoffeeSize;
 import com.cognizant.charlenecoffee.enums.ProductType;
 import com.cognizant.charlenecoffee.models.Product;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.cognizant.charlenecoffee.Utils.Constants.ERROR_INVALID_PRODUCT;
+import static com.cognizant.charlenecoffee.Utils.Constants.EXTRA_PRODUCT_CONNECTOR;
+
+@Service
 public class SaleServiceImpl implements SaleService {
 
     @Autowired
@@ -25,7 +29,10 @@ public class SaleServiceImpl implements SaleService {
         Stream<String> streamProducts = Arrays.stream(products);
 
         streamProducts.forEach(product -> {
-            String[] productStructure = product.split(" ");
+            String[] productStructure = product.toLowerCase().split(" ");
+
+            checkInvalidProduct(productStructure[0]);
+
 
             if(isSize(productStructure[0])){
                 addCoffee(productStructure, availableProducts, saleList);
@@ -36,6 +43,11 @@ public class SaleServiceImpl implements SaleService {
         });
 
         return saleList;
+    }
+
+    private void checkInvalidProduct(String productName){
+        if(productName.matches(ProductType.coffee.name())) 
+            throw new RuntimeException(ERROR_INVALID_PRODUCT + productName);
     }
 
     private Boolean isSize(String size){
@@ -74,7 +86,7 @@ public class SaleServiceImpl implements SaleService {
 
     private void addSaleItem(Product newItem, String productName, List<Product> saleList){
         if(newItem.getName().equals(null)) {
-            throw new RuntimeException("Invalid product: " + productName);
+            throw new RuntimeException(ERROR_INVALID_PRODUCT + productName);
         }else{
             saleList.add(newItem);
         }
@@ -85,7 +97,7 @@ public class SaleServiceImpl implements SaleService {
     }
 
     private Boolean invalidExtra(String[] coffeeStructure){
-        return !coffeeStructure[2].matches("with");
+        return !coffeeStructure[2].matches(EXTRA_PRODUCT_CONNECTOR);
     }
 
     private void addExtraProduct(String[] coffeeStructure, List<Product> availableProducts, List<Product> saleList){
@@ -102,17 +114,17 @@ public class SaleServiceImpl implements SaleService {
 
     private void checkInvalidCoffee(String[] coffeeStructure){
         if(coffeeStructure.length == 1)
-            throw new RuntimeException("Invalid product: " + coffeeStructure);
+            throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);
 
         if(invalidCoffee(coffeeStructure))
-            throw new RuntimeException("Invalid product: " + coffeeStructure);
+            throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);
 
         if(coffeeStructure.length > 5)
-            throw new RuntimeException("Invalid product: " + coffeeStructure);
+            throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);
 
         if(coffeeStructure.length > 2)
             if(invalidExtra(coffeeStructure))
-                throw new RuntimeException("Invalid product: " + coffeeStructure);
+                throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);
 
     }
 }

@@ -3,7 +3,6 @@ package com.cognizant.charlenecoffee.services;
 import com.cognizant.charlenecoffee.enums.CoffeeSize;
 import com.cognizant.charlenecoffee.enums.ProductType;
 import com.cognizant.charlenecoffee.models.Product;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -16,9 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.anyString;
+
 
 @SpringBootTest
 public class SaleServiceTest {
