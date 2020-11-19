@@ -1,0 +1,58 @@
+[
+  {
+    "name": "coffee",
+    "size": "small",
+    "price": 2.5,
+    "type": "coffee",
+    "currency": "CHF"
+  },
+  {
+    "name": "coffee",
+    "size": "medium",
+    "price": 3.0,
+    "type": "coffee",
+    "currency": "CHF"
+  },
+  {
+    "name": "coffee",
+    "size": "large",
+    "price": 3.5,
+    "type": "coffee",
+    "currency": "CHF"
+  },
+  {
+    "name": "orange juice",
+    "size": null,
+    "price": 3.95,
+    "type": "juice",
+    "currency": "CHF"
+  },
+  {
+    "name": "bacon roll",
+    "size": null,
+    "price": 4.50,
+    "type": "snack",
+    "currency": "CHF"
+  },
+  {
+    "name": "extra milk",
+    "size": null,
+    "price": 0.30,
+    "type": "extra",
+    "currency": "CHF"
+  },
+  {
+    "name": "foamed milk",
+    "size": null,
+    "price": 0.50,
+    "type": "extra",
+    "currency": "CHF"
+  },
+  {
+    "name": "special roast coffee",
+    "size": null,
+    "price": 0.90,
+    "type": "extra",
+    "currency": "CHF"
+  }
+]
