@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SaleServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.cognizant.charlenecoffee.services</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SaleServiceImpl (com.cognizant.charlenecoffee.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SaleServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89.7%
+  </span>
+  <span class="absValue">
+    (52/ 58)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.cognizant.charlenecoffee.services;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.cognizant.charlenecoffee.enums.CoffeeSize;
+<i>4</i>&nbsp;import com.cognizant.charlenecoffee.enums.ProductType;
+<i>5</i>&nbsp;import com.cognizant.charlenecoffee.models.Product;
+<i>6</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>7</i>&nbsp;import org.springframework.stereotype.Service;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.ArrayList;
+<i>10</i>&nbsp;import java.util.Arrays;
+<i>11</i>&nbsp;import java.util.List;
+<i>12</i>&nbsp;import java.util.stream.Collectors;
+<i>13</i>&nbsp;import java.util.stream.Stream;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import static com.cognizant.charlenecoffee.Utils.Constants.ERROR_INVALID_PRODUCT;
+<i>16</i>&nbsp;import static com.cognizant.charlenecoffee.Utils.Constants.EXTRA_PRODUCT_CONNECTOR;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;@Service
+<b class="fc"><i>19</i>&nbsp;public class SaleServiceImpl implements SaleService {</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Autowired
+<i>22</i>&nbsp;    private ProductService productService;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public List&lt;Product&gt; readProducts(String[] products) throws Exception{
+<b class="fc"><i>26</i>&nbsp;        List&lt;Product&gt; saleList = new ArrayList&lt;Product&gt;();</b>
+<b class="fc"><i>27</i>&nbsp;        List&lt;Product&gt; availableProducts =  productService.getProducts();</b>
+<i>28</i>&nbsp;
+<b class="fc"><i>29</i>&nbsp;        Stream&lt;String&gt; streamProducts = Arrays.stream(products);</b>
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;        streamProducts.forEach(product -&gt; {</b>
+<b class="fc"><i>32</i>&nbsp;            String[] productStructure = product.toLowerCase().split(&quot; &quot;);</b>
+<i>33</i>&nbsp;
+<b class="fc"><i>34</i>&nbsp;            checkInvalidProduct(productStructure[0]);</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;
+<b class="fc"><i>37</i>&nbsp;            if(isSize(productStructure[0])){</b>
+<b class="fc"><i>38</i>&nbsp;                addCoffee(productStructure, availableProducts, saleList);</b>
+<i>39</i>&nbsp;            }else{
+<b class="fc"><i>40</i>&nbsp;                Product newItem = getProductInfo(availableProducts, product, null);</b>
+<b class="fc"><i>41</i>&nbsp;                addSaleItem(newItem, product, saleList);</b>
+<i>42</i>&nbsp;            };
+<b class="fc"><i>43</i>&nbsp;        });</b>
+<i>44</i>&nbsp;
+<b class="fc"><i>45</i>&nbsp;        return saleList;</b>
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    private void checkInvalidProduct(String productName){
+<b class="fc"><i>49</i>&nbsp;        if(productName.matches(ProductType.coffee.name())) </b>
+<b class="nc"><i>50</i>&nbsp;            throw new RuntimeException(ERROR_INVALID_PRODUCT + productName);</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    private Boolean isSize(String size){
+<b class="fc"><i>54</i>&nbsp;        if(size.matches(CoffeeSize.large.name())</b>
+<b class="fc"><i>55</i>&nbsp;                || size.matches(CoffeeSize.medium.name())</b>
+<b class="fc"><i>56</i>&nbsp;                || size.matches(CoffeeSize.small.name()) )</b>
+<b class="fc"><i>57</i>&nbsp;            return true;</b>
+<b class="fc"><i>58</i>&nbsp;        return false;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    private void addCoffee(String[] coffeeStructure, List&lt;Product&gt; availableProducts, List&lt;Product&gt; saleList){
+<b class="fc"><i>62</i>&nbsp;        checkInvalidCoffee(coffeeStructure);</b>
+<i>63</i>&nbsp;
+<b class="fc"><i>64</i>&nbsp;        Product newItem = getProductInfo(availableProducts, coffeeStructure[1], CoffeeSize.valueOf(coffeeStructure[0]));</b>
+<b class="fc"><i>65</i>&nbsp;        addSaleItem(newItem, coffeeStructure[1], saleList);</b>
+<i>66</i>&nbsp;
+<b class="fc"><i>67</i>&nbsp;        if(coffeeStructure.length &gt; 2)</b>
+<b class="fc"><i>68</i>&nbsp;            addExtraProduct(coffeeStructure, availableProducts, saleList);</b>
+<i>69</i>&nbsp;
+<b class="fc"><i>70</i>&nbsp;    }</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    private Product getProductInfo(List&lt;Product&gt; availableProducts, String productName, CoffeeSize size){
+<b class="fc"><i>74</i>&nbsp;        List&lt;Product&gt; productVerify = availableProducts.stream()</b>
+<b class="fc"><i>75</i>&nbsp;                .filter(product -&gt; product.getName().matches(productName))</b>
+<b class="fc"><i>76</i>&nbsp;                .filter(product -&gt; product.getSize() == size)</b>
+<b class="fc"><i>77</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>78</i>&nbsp;
+<b class="fc"><i>79</i>&nbsp;        if(productVerify.isEmpty())</b>
+<b class="fc"><i>80</i>&nbsp;            return new Product();</b>
+<i>81</i>&nbsp;
+<b class="fc"><i>82</i>&nbsp;        return productVerify.get(0);</b>
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    private void addSaleItem(Product newItem, String productName, List&lt;Product&gt; saleList){
+<b class="fc"><i>88</i>&nbsp;        if(newItem.getName().equals(null)) {</b>
+<b class="nc"><i>89</i>&nbsp;            throw new RuntimeException(ERROR_INVALID_PRODUCT + productName);</b>
+<i>90</i>&nbsp;        }else{
+<b class="fc"><i>91</i>&nbsp;            saleList.add(newItem);</b>
+<i>92</i>&nbsp;        }
+<b class="fc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    private Boolean invalidCoffee(String[] coffeeStructure){
+<b class="fc"><i>96</i>&nbsp;        return coffeeStructure.length == 3 || !coffeeStructure[1].matches(ProductType.coffee.name());</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    private Boolean invalidExtra(String[] coffeeStructure){
+<b class="fc"><i>100</i>&nbsp;        return !coffeeStructure[2].matches(EXTRA_PRODUCT_CONNECTOR);</b>
+<i>101</i>&nbsp;    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    private void addExtraProduct(String[] coffeeStructure, List&lt;Product&gt; availableProducts, List&lt;Product&gt; saleList){
+<b class="fc"><i>104</i>&nbsp;        String extraProduct = &quot;&quot;;</b>
+<b class="fc"><i>105</i>&nbsp;        for(int i = 3; i &lt; coffeeStructure.length; ++i) {</b>
+<b class="fc"><i>106</i>&nbsp;            if(extraProduct.matches(&quot;&quot;))</b>
+<b class="fc"><i>107</i>&nbsp;                extraProduct = coffeeStructure[i];</b>
+<i>108</i>&nbsp;            else
+<b class="fc"><i>109</i>&nbsp;                extraProduct = extraProduct+&quot; &quot;+coffeeStructure[i];</b>
+<i>110</i>&nbsp;        }
+<b class="fc"><i>111</i>&nbsp;        Product newItem = getProductInfo(availableProducts, extraProduct, null);</b>
+<b class="fc"><i>112</i>&nbsp;        addSaleItem(newItem, coffeeStructure[1], saleList);</b>
+<b class="fc"><i>113</i>&nbsp;    }</b>
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    private void checkInvalidCoffee(String[] coffeeStructure){
+<b class="fc"><i>116</i>&nbsp;        if(coffeeStructure.length == 1)</b>
+<b class="nc"><i>117</i>&nbsp;            throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);</b>
+<i>118</i>&nbsp;
+<b class="fc"><i>119</i>&nbsp;        if(invalidCoffee(coffeeStructure))</b>
+<b class="nc"><i>120</i>&nbsp;            throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);</b>
+<i>121</i>&nbsp;
+<b class="fc"><i>122</i>&nbsp;        if(coffeeStructure.length &gt; 5)</b>
+<b class="nc"><i>123</i>&nbsp;            throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);</b>
+<i>124</i>&nbsp;
+<b class="fc"><i>125</i>&nbsp;        if(coffeeStructure.length &gt; 2)</b>
+<b class="fc"><i>126</i>&nbsp;            if(invalidExtra(coffeeStructure))</b>
+<b class="nc"><i>127</i>&nbsp;                throw new RuntimeException(ERROR_INVALID_PRODUCT + coffeeStructure);</b>
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;    }</b>
+<i>130</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-11-19 03:40</div>
+</div>
+</body>
+</html>
