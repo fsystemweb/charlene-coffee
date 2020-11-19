@@ -4,5 +4,6 @@ public enum ProductType {
     coffee,
     extra,
     juice,
-    snack
+    snack,
+    discount
 }

@@ -35,11 +35,11 @@ public class ProductServiceTest {
 
     @Test
     public void getProducts_objectMapperIsCalled() throws IOException {
-        List<Product> mockResponse = createListProductOnlyForTestPurpose();
+        Product[] mockResponse = createArrayProductOnlyForTestPurpose();
         List<Product> expected = createListProductOnlyForTestPurpose();
 
         given(objectMapper.readValue(new ClassPathResource("./products.json").getFile(),
-                List.class)).willReturn(mockResponse);
+                Product[].class)).willReturn(mockResponse);
 
 
         List<Product> result = productService.getProducts();
@@ -50,6 +50,17 @@ public class ProductServiceTest {
                 () -> assertEquals(expected.get(1).getType(), result.get(1).getType())
         );
 
+    }
+
+    private Product[] createArrayProductOnlyForTestPurpose(){
+
+        Product coffee = new Product("coffee", CoffeeSize.large, 2.30, ProductType.coffee, "EUR");
+        Product orangeJuice = new Product("orange juice", null, 2.30, ProductType.juice, "EUR");
+        Product cupcake = new Product("cupcake", null, 3.30, ProductType.snack, "EUR");
+
+        Product[] products = {coffee, orangeJuice, cupcake};
+
+        return products;
     }
 
     private List<Product> createListProductOnlyForTestPurpose(){
