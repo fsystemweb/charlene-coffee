@@ -23,8 +23,15 @@ public class RunApplication {
                 new BufferedReader(new InputStreamReader(System.in));
         String entryData = reader.readLine();
 
-        showResult((Receipt) mainController.createFinalReceipt(entryData));
+        Object result = mainController.createFinalReceipt(entryData);
 
+        parserAndShowResult(result);
+    }
+
+    private static void parserAndShowResult(Object result){
+        if(result.equals(Receipt.class))
+            showResult((Receipt) result);
+        System.out.println(result.toString());
     }
 
     private static void showResult(Receipt receipt){
