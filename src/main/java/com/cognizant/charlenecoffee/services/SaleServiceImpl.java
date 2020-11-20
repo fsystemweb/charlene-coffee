@@ -85,7 +85,7 @@ public class SaleServiceImpl implements SaleService {
 
 
     private void addSaleItem(Product newItem, String productName, List<Product> saleList){
-        if(newItem.getName().equals(null)) {
+        if(newItem.getName() == null) {
             throw new RuntimeException(ERROR_INVALID_PRODUCT + productName);
         }else{
             saleList.add(newItem);
