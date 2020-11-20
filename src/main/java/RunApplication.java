@@ -29,8 +29,11 @@ public class RunApplication {
     }
 
     private static void parserAndShowResult(Object result){
-        if(result.equals(Receipt.class))
-            showResult((Receipt) result);
+        if(result.getClass() == Receipt.class){
+            Receipt receipt = (Receipt) result;
+            showResult(receipt);
+        }
+
         System.out.println(result.toString());
     }
 
