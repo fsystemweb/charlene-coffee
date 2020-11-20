@@ -7,6 +7,7 @@ import com.cognizant.charlenecoffee.models.Receipt;
 import com.cognizant.charlenecoffee.models.RowReceipt;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,13 +49,15 @@ public class ReceiptServiceImpl implements ReceiptService {
                 rowReceipt = new RowReceipt(item.getName(), item.getPrice(), TypeRowReceipt.CREDIT);
                 total.updateAndGet(v -> v - item.getPrice());
             }
-            else
+            else{
                 rowReceipt = new RowReceipt(item.getName(), item.getPrice(), TypeRowReceipt.DEBIT);
+                total.updateAndGet(v -> v + item.getPrice());
+            }
 
-            total.updateAndGet(v -> v + item.getPrice());
             rowReceiptList.add(rowReceipt);
         });
-        receipt.setTotal(total.get());
+        DecimalFormat twoDForm = new DecimalFormat("#.00");
+        receipt.setTotal(twoDForm.format(total.get()));
         receipt.setRows(rowReceiptList);
     }
 }
