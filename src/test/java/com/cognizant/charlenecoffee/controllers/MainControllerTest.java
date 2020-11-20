@@ -103,7 +103,7 @@ public class MainControllerTest {
         Receipt expected = new Receipt();
         expected.setTitle(RECEIPT_TITLE);
         expected.setFinalMessage(RECEIPT_FINAL_MESSAGE);
-        expected.setTotal(7.9);
+        expected.setTotal("7.90");
 
         SimpleDateFormat formatter= new SimpleDateFormat(FORMAT_DATE);
         Date date = new Date(System.currentTimeMillis());

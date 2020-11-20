@@ -1,13 +1,12 @@
 package com.cognizant.charlenecoffee.models;
 
-import java.util.Date;
 import java.util.List;
 
 public class Receipt {
     private String title;
     private String datetime;
     private List<RowReceipt> rows;
-    private Double total;
+    private String total;
     private String finalMessage;
 
     public Receipt() {
@@ -37,11 +36,11 @@ public class Receipt {
         this.rows = rows;
     }
 
-    public Double getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
