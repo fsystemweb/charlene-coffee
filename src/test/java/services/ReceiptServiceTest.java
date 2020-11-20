@@ -69,7 +69,7 @@ public class ReceiptServiceTest {
         Receipt expected = new Receipt();
         expected.setTitle(RECEIPT_TITLE);
         expected.setFinalMessage(RECEIPT_FINAL_MESSAGE);
-        expected.setTotal("6.90");
+        expected.setTotal("12.50");
 
         SimpleDateFormat formatter= new SimpleDateFormat(FORMAT_DATE);
         Date date = new Date(System.currentTimeMillis());

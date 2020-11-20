@@ -45,6 +45,7 @@ public class ReceiptServiceImpl implements ReceiptService {
             if(item.getType() == ProductType.coffee){
                 rowReceipt = new RowReceipt(item.getSize()+" "+item.getName(), item.getPrice()
                         , TypeRowReceipt.DEBIT);
+                total.updateAndGet(v -> v + item.getPrice());
 
             }else if(item.getType() == ProductType.discount){
                 rowReceipt = new RowReceipt(item.getName(), item.getPrice(), TypeRowReceipt.CREDIT);
