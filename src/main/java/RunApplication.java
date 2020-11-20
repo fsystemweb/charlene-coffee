@@ -32,9 +32,9 @@ public class RunApplication {
         if(result.getClass() == Receipt.class){
             Receipt receipt = (Receipt) result;
             showResult(receipt);
+        }else{
+            System.out.println(result.toString());
         }
-
-        System.out.println(result.toString());
     }
 
     private static void showResult(Receipt receipt){
