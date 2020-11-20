@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DiscountServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">services</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DiscountServiceImpl (services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DiscountServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93%
+  </span>
+  <span class="absValue">
+    (40/ 43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package services;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import enums.ProductType;
+<i>5</i>&nbsp;import models.Product;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;import java.util.stream.Collectors;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import static utils.Constants.*;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class DiscountServiceImpl implements DiscountService{
+<i>13</i>&nbsp;
+<b class="fc"><i>14</i>&nbsp;    public DiscountServiceImpl(){};</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public List&lt;Product&gt; addDiscounts(List&lt;Product&gt; saleList){
+<b class="fc"><i>17</i>&nbsp;        addBeverageDiscount(saleList);</b>
+<i>18</i>&nbsp;
+<b class="fc"><i>19</i>&nbsp;        addBonusSnack(saleList);</b>
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;        return saleList;</b>
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    private void addBeverageDiscount(List&lt;Product&gt; saleList){
+<b class="fc"><i>25</i>&nbsp;        List&lt;Product&gt; beverageList = saleList.stream()</b>
+<b class="fc"><i>26</i>&nbsp;                .filter(product -&gt; isBeverage(product.getType()))</b>
+<b class="fc"><i>27</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>28</i>&nbsp;
+<b class="fc"><i>29</i>&nbsp;        int discountQuantity = beverageList.size() / BEVERAGE_PROMO;</b>
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;        if(discountQuantity &gt; 0)</b>
+<b class="fc"><i>32</i>&nbsp;            addItemDiscount(BEVERAGE_PROMO_DSC, beverageList, saleList, discountQuantity);</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    private Boolean isBeverage(ProductType type){
+<b class="fc"><i>36</i>&nbsp;        return type == ProductType.juice || type == ProductType.coffee;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    private void addBonusSnack(List&lt;Product&gt; saleList){
+<b class="fc"><i>40</i>&nbsp;        List&lt;Product&gt; extrasList = saleList.stream()</b>
+<b class="fc"><i>41</i>&nbsp;                .filter(product -&gt; product.getType() == ProductType.extra)</b>
+<b class="fc"><i>42</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;        if(extrasList.size() == 0)</b>
+<b class="fc"><i>45</i>&nbsp;            return;</b>
+<i>46</i>&nbsp;
+<b class="fc"><i>47</i>&nbsp;        List&lt;Product&gt; beverageList = saleList.stream()</b>
+<b class="fc"><i>48</i>&nbsp;                .filter(product -&gt; isBeverage(product.getType()))</b>
+<b class="fc"><i>49</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;        if(beverageList.size() == 0)</b>
+<b class="nc"><i>52</i>&nbsp;            return;</b>
+<i>53</i>&nbsp;
+<b class="fc"><i>54</i>&nbsp;        List&lt;Product&gt; snackList = saleList.stream()</b>
+<b class="fc"><i>55</i>&nbsp;                .filter(product -&gt; product.getType() == ProductType.snack)</b>
+<b class="fc"><i>56</i>&nbsp;                .collect(Collectors.toList());</b>
+<i>57</i>&nbsp;
+<b class="fc"><i>58</i>&nbsp;        if(snackList.size() == 0)</b>
+<b class="nc"><i>59</i>&nbsp;            return;</b>
+<i>60</i>&nbsp;
+<b class="fc"><i>61</i>&nbsp;        int discountQuantity = getDiscountQuantityForBonusSnack(snackList.size(), beverageList.size());</b>
+<i>62</i>&nbsp;
+<b class="fc"><i>63</i>&nbsp;        addItemDiscount(BONUSSNACK_PROMO_DSC, extrasList, saleList, discountQuantity);</b>
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    private int getDiscountQuantityForBonusSnack(int snacks, int beverages){
+<b class="fc"><i>68</i>&nbsp;        if(snacks &gt;= beverages)</b>
+<b class="nc"><i>69</i>&nbsp;            return beverages;</b>
+<i>70</i>&nbsp;        else
+<b class="fc"><i>71</i>&nbsp;            return snacks;</b>
+<i>72</i>&nbsp;    }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    private void addItemDiscount(String promoDsc, List&lt;Product&gt; productList, List&lt;Product&gt; saleList
+<i>75</i>&nbsp;            , int discountQuantity){
+<b class="fc"><i>76</i>&nbsp;        int index = 0;</b>
+<i>77</i>&nbsp;        do {
+<b class="fc"><i>78</i>&nbsp;            if(productList.size() &lt; (index+1))</b>
+<b class="fc"><i>79</i>&nbsp;                discountQuantity = 0;</b>
+<i>80</i>&nbsp;            else{
+<b class="fc"><i>81</i>&nbsp;                Product newDiscount = new Product(promoDsc, null, productList.get(index).getPrice()</b>
+<b class="fc"><i>82</i>&nbsp;                        , ProductType.discount, productList.get(index).getCurrency());</b>
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;                saleList.add(newDiscount);</b>
+<i>85</i>&nbsp;
+<b class="fc"><i>86</i>&nbsp;                discountQuantity--;</b>
+<b class="fc"><i>87</i>&nbsp;                index++;</b>
+<i>88</i>&nbsp;            }
+<i>89</i>&nbsp;
+<b class="fc"><i>90</i>&nbsp;        } while (discountQuantity &gt; 0);</b>
+<b class="fc"><i>91</i>&nbsp;    }</b>
+<i>92</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-11-20 12:57</div>
+</div>
+</body>
+</html>

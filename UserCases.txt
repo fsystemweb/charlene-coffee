@@ -1,0 +1,22 @@
+USES CASES
+------------
+
+CASE USE 1 - GET RECEIPT WITH 3 PRODUCTS
+-----------------------------------------
+	Input -> orange juice, small coffee, large coffee
+
+CASE USE 2 - GET RECEIPT WITH EXTRAS 
+-----------------------------------------
+	Input -> orange juice, small coffee with extra milk, large coffee with foamed milk
+
+CASE USE 3 - GET RECEIPT WITH 13 BEVERAGES
+-----------------------------------------
+	Input -> orange juice, small coffee with extra milk, large coffee with foamed milk, orange juice, small coffee, medium coffee, orange juice, small coffee, orange juice, large coffee, orange juice, large coffee, small coffee
+
+CASE USE 4 - GET RECEIPT WITH 2 BONUS SNACKS
+-----------------------------------------
+	Input -> orange juice, small coffee with extra milk, large coffee with foamed milk, bacon roll, bacon roll
+
+CASE USE 5 - INVALID PRODUCT  
+-----------------------------------------
+	Input -> small coffi
