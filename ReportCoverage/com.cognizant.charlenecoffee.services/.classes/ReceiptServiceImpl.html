@@ -74,11 +74,11 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package com.cognizant.charlenecoffee.services;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import com.cognizant.charlenecoffee.enums.ProductType;
-<i>4</i>&nbsp;import com.cognizant.charlenecoffee.enums.TypeRowReceipt;
-<i>5</i>&nbsp;import com.cognizant.charlenecoffee.models.Product;
-<i>6</i>&nbsp;import com.cognizant.charlenecoffee.models.Receipt;
-<i>7</i>&nbsp;import com.cognizant.charlenecoffee.models.RowReceipt;
+<i>3</i>&nbsp;import ProductType;
+<i>4</i>&nbsp;import TypeRowReceipt;
+<i>5</i>&nbsp;import Product;
+<i>6</i>&nbsp;import Receipt;
+<i>7</i>&nbsp;import RowReceipt;
 <i>8</i>&nbsp;import org.springframework.stereotype.Service;
 <i>9</i>&nbsp;
 <i>10</i>&nbsp;import java.text.SimpleDateFormat;
@@ -87,7 +87,7 @@
 <i>13</i>&nbsp;import java.util.List;
 <i>14</i>&nbsp;import java.util.concurrent.atomic.AtomicReference;
 <i>15</i>&nbsp;
-<i>16</i>&nbsp;import static com.cognizant.charlenecoffee.Utils.Constants.*;
+<i>16</i>&nbsp;import static Constants.*;
 <i>17</i>&nbsp;
 <i>18</i>&nbsp;@Service
 <b class="fc"><i>19</i>&nbsp;public class ReceiptServiceImpl implements ReceiptService {</b>

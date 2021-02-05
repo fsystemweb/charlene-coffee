@@ -74,9 +74,9 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package com.cognizant.charlenecoffee.services;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import com.cognizant.charlenecoffee.enums.CoffeeSize;
-<i>4</i>&nbsp;import com.cognizant.charlenecoffee.enums.ProductType;
-<i>5</i>&nbsp;import com.cognizant.charlenecoffee.models.Product;
+<i>3</i>&nbsp;import CoffeeSize;
+<i>4</i>&nbsp;import ProductType;
+<i>5</i>&nbsp;import Product;
 <i>6</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
 <i>7</i>&nbsp;import org.springframework.stereotype.Service;
 <i>8</i>&nbsp;
@@ -86,8 +86,8 @@
 <i>12</i>&nbsp;import java.util.stream.Collectors;
 <i>13</i>&nbsp;import java.util.stream.Stream;
 <i>14</i>&nbsp;
-<i>15</i>&nbsp;import static com.cognizant.charlenecoffee.Utils.Constants.ERROR_INVALID_PRODUCT;
-<i>16</i>&nbsp;import static com.cognizant.charlenecoffee.Utils.Constants.EXTRA_PRODUCT_CONNECTOR;
+<i>15</i>&nbsp;import static Constants.ERROR_INVALID_PRODUCT;
+<i>16</i>&nbsp;import static Constants.EXTRA_PRODUCT_CONNECTOR;
 <i>17</i>&nbsp;
 <i>18</i>&nbsp;@Service
 <b class="fc"><i>19</i>&nbsp;public class SaleServiceImpl implements SaleService {</b>
